@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevTools - Free Online Utilities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tool-header {
+            background: #4a00e0;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .tool-content {
+            padding: 25px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        textarea, input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        textarea:focus, input:focus, select:focus {
+            border-color: #4a00e0;
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        button {
+            background: #4a00e0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #3600b2;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .calculator button {
+            padding: 15px;
+        }
+        
+        .calculator-display {
+            grid-column: span 4;
+            text-align: right;
+            padding: 15px;
+            font-size: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-container {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WebDevTools</h1>
+            <p>Free online utilities to make your life easier</p>
+        </header>
+        
+        <div class="tools-container">
+            <!-- Text Tools Card -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-font"></i> Text Tools
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="textInput">Enter your text:</label>
+                        <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+                    </div>
+                    <button onclick="countText()">Analyze Text</button>
+                    <div class="result" id="textResult">
+                        Results will appear here
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculator Card -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-calculator"></i> Calculator
+                </div>
+                <div class="tool-content">
+                    <div class="calculator">
+                        <div class="calculator-display" id="calcDisplay">0</div>
+                        <button onclick="clearDisplay()">C</button>
+                        <button onclick="backspace()">⌫</button>
+                        <button onclick="append('%')">%</button>
+                        <button onclick="append('/')">/</button>
+                        <button onclick="append('7')">7</button>
+                        <button onclick="append('8')">8</button>
+                        <button onclick="append('9')">9</button>
+                        <button onclick="append('*')">×</button>
+                        <button onclick="append('4')">4</button>
+                        <button onclick="append('5')">5</button>
+                        <button onclick="append('6')">6</button>
+                        <button onclick="append('-')">-</button>
+                        <button onclick="append('1')">1</button>
+                        <button onclick="append('2')">2</button>
+                        <button onclick="append('3')">3</button>
+                        <button onclick="append('+')">+</button>
+                        <button onclick="append('0')">0</button>
+                        <button onclick="append('.')">.</button>
+                        <button onclick="calculate()" style="grid-column: span 2;">=</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Unit Converter Card -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-exchange-alt"></i> Unit Converter
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="converterValue">Enter value:</label>
+                        <input type="number" id="converterValue" placeholder="Enter a number">
+                    </div>
+                    <div class="input-group">
+                        <label for="converterFrom">From:</label>
+                        <select id="converterFrom">
+                            <option value="meter">Meter</option>
+                            <option value="kilometer">Kilometer</option>
+                            <option value="mile">Mile</option>
+                            <option value="celsius">Celsius</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="converterTo">To:</label>
+                        <select id="converterTo">
+                            <option value="kilometer">Kilometer</option>
+                            <option value="meter">Meter</option>
+                            <option value="mile">Mile</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="celsius">Celsius</option>
+                        </select>
+                    </div>
+                    <button onclick="convertUnits()">Convert</button>
+                    <div class="result" id="converterResult">
+                        Results will appear here
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>WebDevTools &copy; 2023 - All rights reserved</p>
+            <p>Free to use for everyone</p>
+        </div>
+    </div>
+
+    <script>
+        // Text Tools Functions
+        function countText() {
+            const text = document.getElementById('textInput').value;
+            const charCount = text.length;
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const lineCount = text === '' ? 0 : text.split('\n').length;
+            
+            document.getElementById('textResult').innerHTML = `
+                Characters: ${charCount} | Words: ${wordCount}<br>
+                Lines: ${lineCount}
+            `;
+        }
+        
+        // Calculator Functions
+        let currentInput = '';
+        
+        function append(value) {
+            if (currentInput === '0' && value !== '.') {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            updateDisplay();
+        }
+        
+        function clearDisplay() {
+            currentInput = '';
+            updateDisplay();
+        }
+        
+        function backspace() {
+            currentInput = currentInput.slice(0, -1);
+            if (currentInput === '') currentInput = '0';
+            updateDisplay();
+        }
+        
+        function calculate() {
+            try {
+                currentInput = eval(currentInput).toString();
+            } catch (error) {
+                currentInput = 'Error';
+            }
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('calcDisplay').textContent = currentInput === '' ? '0' : currentInput;
+        }
+        
+        // Unit Converter Functions
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('converterValue').value);
+            const fromUnit = document.getElementById('converterFrom').value;
+            const toUnit = document.getElementById('converterTo').value;
+            
+            if (isNaN(value)) {
+                document.getElementById('converterResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            
+            let result;
+            
+            // Length conversions
+            if (fromUnit === 'meter' && toUnit === 'kilometer') {
+                result = value / 1000;
+            } else if (fromUnit === 'meter' && toUnit === 'mile') {
+                result = value / 1609.34;
+            } else if (fromUnit === 'kilometer' && toUnit === 'meter') {
+                result = value * 1000;
+            } else if (fromUnit === 'kilometer' && toUnit === 'mile') {
+                result = value / 1.60934;
+            } else if (fromUnit === 'mile' && toUnit === 'meter') {
+                result = value * 1609.34;
+            } else if (fromUnit === 'mile' && toUnit === 'kilometer') {
+                result = value * 1.60934;
+            } 
+            // Temperature conversions
+            else if (fromUnit === 'celsius' && toUnit === 'fahrenheit') {
+                result = (value * 9/5) + 32;
+            } else if (fromUnit === 'fahrenheit' && toUnit === 'celsius') {
+                result = (value - 32) * 5/9;
+            } else {
+                result = value; // Same unit
+            }
+            
+            document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+        }
+        
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
